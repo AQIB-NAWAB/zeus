@@ -163,6 +163,8 @@ export default class ActivityStore {
 
         const cashuInvoices = this.cashuStore.invoices;
         const cashuPayments = this.cashuStore.payments;
+        const cashuReceivedTokens = this.cashuStore.receivedTokens;
+        const cashuSentTokens = this.cashuStore.sentTokens;
 
         let additions = payments.concat(invoices);
         if (BackendUtils.supportsOnchainSends()) {
@@ -170,7 +172,11 @@ export default class ActivityStore {
         }
 
         if (BackendUtils.supportsCashu()) {
-            additions = additions.concat(cashuInvoices).concat(cashuPayments);
+            additions = additions
+                .concat(cashuInvoices)
+                .concat(cashuPayments)
+                .concat(cashuReceivedTokens)
+                .concat(cashuSentTokens);
         }
 
         // push payments, txs, invoices to one array
